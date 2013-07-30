@@ -75,7 +75,7 @@
       for (var i = 0; i < size; i++) {
         candidates += im_get_candidate_char(i) + ' ';
       }
-      log('Candidates: ' + candidates);
+      log(size + ' candidates: ' + candidates);
     }
 
     window.test = function (keyword) {

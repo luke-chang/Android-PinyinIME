@@ -16,12 +16,6 @@ emcc ../share/pinyinime.cpp ../share/dictbuilder.cpp ../share/dicttrie.cpp \
      '_im_get_spl_start_pos', '_im_choose', '_im_cancel_last_choice', '_im_get_fixed_len', \
      '_im_get_predicts', '_im_enable_shm_as_szm', '_im_enable_ym_as_szm', '_malloc', '_toUTF8']"
 
-echo "Entering ../command "
-cd ../command
-
-make
-./pinyinime_dictbuilder
-
 echo "Entering ../empinyin"
 cd ../empinyin
 

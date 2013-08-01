@@ -27,7 +27,7 @@
 using namespace ime_pinyin;
 
 UTF8 g_utf8_buf[1024] = { 0 };
-bool g_show_detail = true;
+bool g_show_detail = false;
 
 const char*
 toUTF8(const char16* src, size_t length) {

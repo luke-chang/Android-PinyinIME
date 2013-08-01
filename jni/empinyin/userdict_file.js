@@ -13,9 +13,13 @@
       parent.removeChild(parent.childNodes[0]);
     }
 
-    var logElem = document.createElement('div');
-    logElem.textContent = getLoggerTime() + ": " + msg;
-    parent.appendChild(logElem);
+    if (typeof msg == 'string') {
+      var logElem = document.createElement('div');
+      logElem.textContent = getLoggerTime() + ": " + msg;
+      parent.appendChild(logElem);
+    } else {
+      parent.appendChild(msg);
+    }
   }
 
   Module["preRun"].push(function() {
@@ -65,6 +69,7 @@
         var byteArray = event.target.result.content;
 
         // Write user dict data into FS
+        //alert(FS.findObject('data/user_dict.data').contents);
         Module['FS_createPreloadedFile']('/data', 'user_dict.data',
                                          byteArray, true, true, function() {
           Module['removeRunDependency']('fp data/user_dict.data');
@@ -77,15 +82,14 @@
     }
 
     function createSampleDataForUserDict() {
-      var sampleArray = new Uint8Array([ 1, 2, 3, 4 ]);
-      saveUserDictFileToDB(USER_DICT, sampleArray, readUserDictFileFromDB);
+      saveUserDictFileToDB(USER_DICT, [], readUserDictFileFromDB);
     }
 
-    function saveUserDictFileToDB(name, uint8Array, callback) {
+    function saveUserDictFileToDB(name, byteArray, callback) {
       var request = db.transaction([STORE_NAME], 'readwrite')
-                      .objectStore(STORE_NAME).add({
+                      .objectStore(STORE_NAME).put({
                           name: name,
-                          content: uint8Array
+                          content: byteArray
                         });
 
       request.onsuccess = function writedb_onsuccess(event) {
@@ -102,7 +106,6 @@
         log('No FS is Found');
         return;
       }
-
 
       saveUserDictFileToDB(USER_DICT,
                            FS.findObject(name).contents,

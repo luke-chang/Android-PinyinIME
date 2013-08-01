@@ -652,7 +652,7 @@ void MatrixSearch::update_dict_freq() {
 
 bool MatrixSearch::add_lma_to_userdict(uint16 lma_fr, uint16 lma_to,
                                        float score) {
-  if (lma_to - lma_fr <= 1 || NULL == user_dict_)
+  if (lma_to - lma_fr < 1 || NULL == user_dict_)
     return false;
 
   char16 word_str[kMaxLemmaSize + 1];

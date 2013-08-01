@@ -1,7 +1,7 @@
 CC=gcc
-CFLAGS= -g -m32 -Wall -std=c99 -lpthread
+CFLAGS= -O3 -m32 -Wall -std=c99 -lpthread
 CPP=g++
-CPPFLAGS= -g3 -m32 -Wall -lpthread
+CPPFLAGS= -O3 -m32 -Wall -lpthread
 
 PINYINIME_DICTBUILDER=pinyinime_dictbuilder
 

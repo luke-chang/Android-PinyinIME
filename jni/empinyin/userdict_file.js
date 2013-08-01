@@ -62,22 +62,13 @@
         }
 
         // Got the blob object of user dict, write it to FS
-        var userDictBlob = event.target.result.content;
+        var byteArray = event.target.result.content;
 
-        var reader = new FileReader(userDictBlob);
-        reader.addEventListener('loadend', function(event) {
-          var arrayBuffer = event.target.result;
-          var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer)
-                                                : arrayBuffer;
-
-          // Write user dict data into FS
-          Module['FS_createPreloadedFile']('/data', 'user_dict.data',
-                                           byteArray, true, true, function() {
-            Module['removeRunDependency']('fp data/user_dict.data');
-          });
+        // Write user dict data into FS
+        Module['FS_createPreloadedFile']('/data', 'user_dict.data',
+                                         byteArray, true, true, function() {
+          Module['removeRunDependency']('fp data/user_dict.data');
         });
-
-        reader.readAsArrayBuffer(userDictBlob);
       };
 
       request.onerror = function readdb_oncomplete(event) {
@@ -86,17 +77,15 @@
     }
 
     function createSampleDataForUserDict() {
-      var fileParts = ['abcddwefwedddd'];
-      var sampleBlob = new Blob(fileParts, {type: 'application/octet-binary'});
-      saveUserDictFileToDB(USER_DICT, sampleBlob, readUserDictFileFromDB);
+      var sampleArray = new Uint8Array([ 1, 2, 3, 4 ]);
+      saveUserDictFileToDB(USER_DICT, sampleArray, readUserDictFileFromDB);
     }
 
-    // Save ArrayBuffer directly?
-    function saveUserDictFileToDB(name, blob, callback) {
+    function saveUserDictFileToDB(name, uint8Array, callback) {
       var request = db.transaction([STORE_NAME], 'readwrite')
                       .objectStore(STORE_NAME).add({
                           name: name,
-                          content: blob
+                          content: uint8Array
                         });
 
       request.onsuccess = function writedb_onsuccess(event) {
@@ -107,6 +96,20 @@
         callback(false);
       };
     }
+
+    function saveFileToDB(name, callback) {
+      if (!FS) {
+        log('No FS is Found');
+        return;
+      }
+
+
+      saveUserDictFileToDB(USER_DICT,
+                           FS.findObject(name).contents,
+                           callback);
+    }
+
+    if (!Module['saveFileToDB']) Module['saveFileToDB'] = saveFileToDB;
   });
 })();
 

@@ -1,10 +1,10 @@
 # !/bin/sh
 
-EMSCRIPTEN_HOME=~/work/opensource/emscripten
+EMSCRIPTEN_HOME=~/Develop/emscripten
 echo "$EMSCRIPTEN_HOME"
 
 echo "Build libpinyin.js"
-emcc ../share/pinyinime.cpp ../share/dictbuilder.cpp ../share/dicttrie.cpp \
+$EMSCRIPTEN_HOME/emcc ../share/pinyinime.cpp ../share/dictbuilder.cpp ../share/dicttrie.cpp \
      ../share/matrixsearch.cpp ../share/ngram.cpp ../share/searchutility.cpp \
      ../share/spellingtrie.cpp ../share/sync.cpp ../share/utf16char.cpp \
      ../share/dictlist.cpp ../share/lpicache.cpp ../share/mystdlib.cpp \

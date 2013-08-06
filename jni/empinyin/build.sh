@@ -14,7 +14,7 @@ emcc ../share/pinyinime.cpp ../share/dictbuilder.cpp ../share/dicttrie.cpp \
      '_im_open_decoder_fd', '_im_close_decoder', '_im_set_max_lens', '_im_flush_cache', \
      '_im_search', '_im_delsearch', '_im_reset_search', '_im_get_sps_str', '_im_get_candidate_char', '_im_get_candidate', \
      '_im_get_spl_start_pos', '_im_choose', '_im_cancel_last_choice', '_im_get_fixed_len', \
-     '_im_get_predicts', '_im_enable_shm_as_szm', '_im_enable_ym_as_szm', '_malloc', '_toUTF8']"
+     '_im_get_predicts', '_im_enable_shm_as_szm', '_im_enable_ym_as_szm', '_malloc', '_toUTF8', '_im_get_predict_at', '_im_get_predicts_utf8']"
 
 echo "Entering ../empinyin"
 cd ../empinyin

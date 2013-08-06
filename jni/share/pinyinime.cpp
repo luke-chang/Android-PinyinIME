@@ -15,6 +15,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 #include "../include/pinyinime.h"
 #include "../include/dicttrie.h"
 #include "../include/matrixsearch.h"
@@ -26,6 +27,7 @@ extern "C" {
 #endif
 
   static UTF8 g_utf8_buf[1024] = { 0 };
+  static UTF16 g_utf16_buf[1024] = { 0 };
 
   using namespace ime_pinyin;
 
@@ -36,6 +38,7 @@ extern "C" {
   MatrixSearch* matrix_search = NULL;
 
   char16 predict_buf[kMaxPredictNum][kMaxPredictSize + 1];
+  char predict_buf_utf8[kMaxPredictNum][(kMaxPredictSize + 1) * 6];
 
   bool im_open_decoder(const char *fn_sys_dict, const char *fn_usr_dict) {
     if (NULL != matrix_search)
@@ -128,6 +131,17 @@ extern "C" {
     return (const char*) g_utf8_buf;
   }
 
+  const char16* toUTF16(const char* src, size_t length) {
+    UTF8 *utf8Start = (UTF8 *) src;
+    UTF8 *utf8End = (UTF8 *) (src + length);
+    UTF16* utf16Start = g_utf16_buf;
+
+    ConvertUTF8toUTF16((const UTF8 **) &utf8Start, utf8End, &utf16Start,
+        &(g_utf16_buf[1024]), strictConversion);
+
+    return (const char16 *) g_utf16_buf;
+  }
+
   const char* im_get_candidate_char(size_t cand_id) {
     if (NULL == matrix_search)
       return NULL;
@@ -163,6 +177,44 @@ extern "C" {
       return 0;
 
     return matrix_search->get_fixedlen();
+  }
+
+  /**
+   * Convert UTF8 string to UTF16 string and query predicts.
+   * @param buf
+   * @return
+   */
+  size_t im_get_predicts_utf8(const char *buf,
+                              char (*&pre_buf)[(kMaxPredictSize + 1) * 6]) {
+    if (NULL == buf)
+      return 0;
+
+    const char16 *his_buf = toUTF16(buf, 64);
+
+    size_t fixed_len = utf16_strlen(his_buf);
+    const char16 *fixed_ptr = his_buf;
+    if (fixed_len > kMaxPredictSize) {
+      fixed_ptr += fixed_len - kMaxPredictSize;
+      fixed_len = kMaxPredictSize;
+    }
+
+    size_t num = matrix_search->get_predicts(his_buf, predict_buf, kMaxPredictNum);
+
+    // Convert char16 predicts to char predicts
+    pre_buf = predict_buf_utf8;
+
+    for (size_t idx = 0; idx < kMaxPredictNum; idx++) {
+      strcpy(pre_buf[idx], toUTF8(predict_buf[idx], kMaxPredictSize + 1));
+    }
+
+    return num;
+  }
+
+  const char* im_get_predict_at(size_t pos) {
+    if (pos >= kMaxPredictNum)
+      return NULL;
+
+    return predict_buf_utf8[pos];
   }
 
   size_t im_get_predicts(const char16 *his_buf,

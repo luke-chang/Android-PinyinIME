@@ -34,6 +34,8 @@
     var im_search = Module.cwrap('im_search', 'number', ['string', 'number']);
     var im_get_candidate = Module.cwrap('im_get_candidate', 'string', ['number', 'string', 'number']);
     var im_get_candidate_char = Module.cwrap('im_get_candidate_char', 'string', ['number']);
+    var im_get_predicts = Module.cwrap('im_get_predicts_utf8', 'number', ['string', 'number']);
+    var im_get_predict_at = Module.cwrap('im_get_predict_at', 'string', ['number']);
 
     log('Data file is ready');
     log('Opening data/dict.data ....');
@@ -52,6 +54,10 @@
 
     document.getElementById('getCandidates').onclick = function() {
       printCandidates(document.getElementById('pinyin').value.trim());
+    };
+
+    document.getElementById('get_predicts').onclick = function() {
+      getPredicts(document.getElementById('pinyin').value.trim());
     };
 
     var TIMES = 100;
@@ -78,9 +84,31 @@
       log(size + ' candidates: ' + candidates);
     }
 
+    function getPredicts(key) {
+      var buf = Module._malloc(500 * 8 * 6);
+      var arrayBuffer = new Uint8Array(500 * 8 * 6);
+
+      var n = im_get_predicts(key, buf);
+      log('Get ' + n + ' predicts for "' + key + '": ');
+
+      var predicts = [];
+      for (var i = 0; i < n; i++) {
+        var arrayBuffer = new Uint8Array(8 * 6);
+        for (var j = 0; j < arrayBuffer.byteLength; j++) {
+          arrayBuffer[j] = HEAPU8[buf + i * 8 * 6 + j];
+        }
+
+        // TODO convert arraybuffer to string?
+        predicts.push(im_get_predict_at(i));
+      }
+
+      log(predicts.join(' '));
+
+      Module._free(buf);
+    }
+
     window.test = function (keyword) {
       try {
-
         var times = parseInt(document.getElementById('times').value);
         log('search ' + times + ' times keyword "' + keyword + '"');
 

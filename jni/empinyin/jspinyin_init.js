@@ -91,12 +91,15 @@
       var n = im_get_predicts(key, buf);
       log('Get ' + n + ' predicts for "' + key + '": ');
 
-      var base = HEAP32[buf >> 2];
       var predicts = [];
-      var textDecoder = new TextDecoder('UTF8');
       for (var i = 0; i < n; i++) {
-        var arrayBuffer = HEAPU8.subarray(base + i * 8 * 6, base + i * 8 * 6 + 8 * 6);
-        predicts.push(textDecoder.decode(arrayBuffer));
+        var arrayBuffer = new Uint8Array(8 * 6);
+        for (var j = 0; j < arrayBuffer.byteLength; j++) {
+          arrayBuffer[j] = HEAPU8[buf + i * 8 * 6 + j];
+        }
+
+        // TODO convert arraybuffer to string?
+        predicts.push(im_get_predict_at(i));
       }
 
       log(predicts.join(' '));

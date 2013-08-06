@@ -1,0 +1,49 @@
+diff --git a/jni/empinyin/libpinyin.js b/jni/empinyin/libpinyin.js
+index 6eb983b..ef56f5e 100644
+--- a/jni/empinyin/libpinyin.js
++++ b/jni/empinyin/libpinyin.js
+@@ -2433,6 +2433,26 @@ function copyTempDouble(ptr) {
+       ABORT = true;
+       throw 'Pure virtual function called!';
+     }
++    
++  function _qsort2(base, num, size, cmp) {
++      // forward calls to the JavaScript sort method
++      // first, sort the items logically
++      var keys = [];
++
++      for (var i = 0; i < num; i++) {
++        keys.push(HEAP32[(base + i * size) >> 2]);
++      }
++
++      keys.sort(function(a, b) {
++        return a - b;
++      });
++
++      // apply the sort
++      for (var i = 0; i < num; i++) {
++        HEAP32[(base+i*size >> 2)] = keys[i];
++      }
++    }
++    
+   function _qsort(base, num, size, cmp) {
+       if (num == 0 || size == 0) return;
+       // forward calls to the JavaScript sort method
+@@ -10451,7 +10471,7 @@ function __ZN10ime_pinyin12MatrixSearch20QsortLmaPsbItemByPsbEPNS_10LmaPsbItemEj
+    $pos_023 = $pos_023 + 1 | 0;
+   } while ($pos_023 >>> 0 < $num >>> 0);
+  }
+- _qsort($call | 0, $num | 0, 4, 36);
++ _qsort2($call | 0, $num | 0, 4, 36);
+  $6$0 = _llvm_umul_with_overflow_i32($num | 0, 8) | 0;
+  $call3 = __Znaj(tempRet0 ? -1 : $6$0) | 0;
+  $10 = $call3;
+@@ -10493,7 +10513,7 @@ function __ZN10ime_pinyin12MatrixSearch22QsortLmaPsbItemByHanziEPNS_10LmaPsbItem
+    $pos_023 = $pos_023 + 1 | 0;
+   } while ($pos_023 >>> 0 < $num >>> 0);
+  }
+- _qsort($call | 0, $num | 0, 4, 36);
++ _qsort2($call | 0, $num | 0, 4, 36);
+  $6$0 = _llvm_umul_with_overflow_i32($num | 0, 8) | 0;
+  $call3 = __Znaj(tempRet0 ? -1 : $6$0) | 0;
+  $10 = $call3;

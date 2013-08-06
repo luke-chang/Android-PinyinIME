@@ -85,26 +85,16 @@
     }
 
     function getPredicts(key) {
-      var buf = Module._malloc(500 * 8 * 6);
-      var arrayBuffer = new Uint8Array(500 * 8 * 6);
-
-      var n = im_get_predicts(key, buf);
+      var n = im_get_predicts(key);
       log('Get ' + n + ' predicts for "' + key + '": ');
 
       var predicts = [];
-      for (var i = 0; i < n; i++) {
-        var arrayBuffer = new Uint8Array(8 * 6);
-        for (var j = 0; j < arrayBuffer.byteLength; j++) {
-          arrayBuffer[j] = HEAPU8[buf + i * 8 * 6 + j];
-        }
 
-        // TODO convert arraybuffer to string?
+      for (var i = 0; i < n; i++) {
         predicts.push(im_get_predict_at(i));
       }
 
       log(predicts.join(' '));
-
-      Module._free(buf);
     }
 
     window.test = function (keyword) {

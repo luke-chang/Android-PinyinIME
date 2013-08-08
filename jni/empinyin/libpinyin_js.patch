@@ -1,12 +1,30 @@
 diff --git a/jni/empinyin/libpinyin.js b/jni/empinyin/libpinyin.js
-index 6eb983b..ef56f5e 100644
+index ab5948d..5947f55 100644
 --- a/jni/empinyin/libpinyin.js
 +++ b/jni/empinyin/libpinyin.js
+@@ -15,7 +15,7 @@
+ // after the generated code, you will need to define   var Module = {};
+ // before the code. Then that object will be used in the code, and you
+ // can continue to use Module afterwards as well.
+-var Module;
++(function(Module) {
+ if (!Module) Module = eval('(function() { try { return Module || {} } catch(e) { return {} } })()');
+ // Sometimes an existing Module object exists with properties
+ // meant to overwrite the default module functionality. Here
+@@ -901,7 +901,7 @@ function removeRunDependency(id) {
+     if (runDependencyWatcher !== null) {
+       clearInterval(runDependencyWatcher);
+       runDependencyWatcher = null;
+-    } 
++    }
+     // If run has never been called, and we should call run (INVOKE_RUN is true, and Module.noInitialRun is not false)
+     if (!calledRun && shouldRunNow) run();
+   }
 @@ -2433,6 +2433,26 @@ function copyTempDouble(ptr) {
        ABORT = true;
        throw 'Pure virtual function called!';
      }
-+    
++
 +  function _qsort2(base, num, size, cmp) {
 +      // forward calls to the JavaScript sort method
 +      // first, sort the items logically
@@ -25,11 +43,46 @@ index 6eb983b..ef56f5e 100644
 +        HEAP32[(base+i*size >> 2)] = keys[i];
 +      }
 +    }
-+    
++
    function _qsort(base, num, size, cmp) {
        if (num == 0 || size == 0) return;
        // forward calls to the JavaScript sort method
-@@ -10451,7 +10471,7 @@ function __ZN10ime_pinyin12MatrixSearch20QsortLmaPsbItemByPsbEPNS_10LmaPsbItemEj
+@@ -3338,7 +3358,7 @@ function copyTempDouble(ptr) {
+           	// FIXME: ideally this should be clamped against the canvas size and zero
+           	Browser.mouseX += Browser.mouseMovementX;
+           	Browser.mouseY += Browser.mouseMovementY;
+-          }        
++          }
+         } else {
+           // Otherwise, calculate the movement based on the changes
+           // in the coordinates.
+@@ -3399,7 +3419,7 @@ function copyTempDouble(ptr) {
+         this.windowedHeight = canvas.height;
+         canvas.width = screen.width;
+         canvas.height = screen.height;
+-        // check if SDL is available   
++        // check if SDL is available
+         if (typeof SDL != "undefined") {
+         	var flags = HEAPU32[((SDL.screen+Runtime.QUANTUM_SIZE*0)>>2)];
+         	flags = flags | 0x00800000; // set SDL_FULLSCREEN flag
+@@ -3410,7 +3430,7 @@ function copyTempDouble(ptr) {
+         var canvas = Module['canvas'];
+         canvas.width = this.windowedWidth;
+         canvas.height = this.windowedHeight;
+-        // check if SDL is available       
++        // check if SDL is available
+         if (typeof SDL != "undefined") {
+         	var flags = HEAPU32[((SDL.screen+Runtime.QUANTUM_SIZE*0)>>2)];
+         	flags = flags & ~0x00800000; // clear SDL_FULLSCREEN flag
+@@ -3659,6 +3679,7 @@ var asm = (function(global, env, buffer) {
+   var ___setErrNo=env.___setErrNo;
+   var _recv=env._recv;
+   var _fseek=env._fseek;
++  var _qsort2=env._qsort2;
+   var _qsort=env._qsort;
+   var _send=env._send;
+   var _write=env._write;
+@@ -10454,7 +10475,7 @@ function __ZN10ime_pinyin12MatrixSearch20QsortLmaPsbItemByPsbEPNS_10LmaPsbItemEj
     $pos_023 = $pos_023 + 1 | 0;
    } while ($pos_023 >>> 0 < $num >>> 0);
   }
@@ -38,7 +91,7 @@ index 6eb983b..ef56f5e 100644
   $6$0 = _llvm_umul_with_overflow_i32($num | 0, 8) | 0;
   $call3 = __Znaj(tempRet0 ? -1 : $6$0) | 0;
   $10 = $call3;
-@@ -10493,7 +10513,7 @@ function __ZN10ime_pinyin12MatrixSearch22QsortLmaPsbItemByHanziEPNS_10LmaPsbItem
+@@ -10496,7 +10517,7 @@ function __ZN10ime_pinyin12MatrixSearch22QsortLmaPsbItemByHanziEPNS_10LmaPsbItem
     $pos_023 = $pos_023 + 1 | 0;
    } while ($pos_023 >>> 0 < $num >>> 0);
   }
@@ -47,3 +100,30 @@ index 6eb983b..ef56f5e 100644
   $6$0 = _llvm_umul_with_overflow_i32($num | 0, 8) | 0;
   $call3 = __Znaj(tempRet0 ? -1 : $6$0) | 0;
   $10 = $call3;
+@@ -26921,7 +26942,7 @@ function b12(p0, p1, p2, p3) {
+   return { _im_enable_ym_as_szm: _im_enable_ym_as_szm, _strlen: _strlen, _im_reset_search: _im_reset_search, _im_flush_cache: _im_flush_cache, _im_get_candidate_char: _im_get_candidate_char, _realloc: _realloc, _im_get_spl_start: _im_get_spl_start, _im_close_decoder: _im_close_decoder, _toUTF8: _toUTF8, _im_open_decoder_fd: _im_open_decoder_fd, _strncpy: _strncpy, _im_get_spl_start_at: _im_get_spl_start_at, _im_get_fixed_len: _im_get_fixed_len, _im_cancel_last_choice: _im_cancel_last_choice, _memset: _memset, _im_search: _im_search, _memcpy: _memcpy, _calloc: _calloc, _im_choose: _im_choose, _im_set_max_lens: _im_set_max_lens, _im_get_predict_at: _im_get_predict_at, _im_get_candidate: _im_get_candidate, _im_enable_shm_as_szm: _im_enable_shm_as_szm, _im_get_sps_str: _im_get_sps_str, _memcmp: _memcmp, _im_get_predicts: _im_get_predicts, _free: _free, _im_open_decoder: _im_open_decoder, _memmove: _memmove, _malloc: _malloc, _im_get_predicts_utf8: _im_get_predicts_utf8, _im_delsearch: _im_delsearch, _strcpy: _strcpy, runPostSets: runPostSets, stackAlloc: stackAlloc, stackSave: stackSave, stackRestore: stackRestore, setThrew: setThrew, setTempRet0: setTempRet0, setTempRet1: setTempRet1, setTempRet2: setTempRet2, setTempRet3: setTempRet3, setTempRet4: setTempRet4, setTempRet5: setTempRet5, setTempRet6: setTempRet6, setTempRet7: setTempRet7, setTempRet8: setTempRet8, setTempRet9: setTempRet9, dynCall_viiiii: dynCall_viiiii, dynCall_vi: dynCall_vi, dynCall_vii: dynCall_vii, dynCall_iiiiiii: dynCall_iiiiiii, dynCall_iiiii: dynCall_iiiii, dynCall_ii: dynCall_ii, dynCall_iiii: dynCall_iiii, dynCall_viii: dynCall_viii, dynCall_v: dynCall_v, dynCall_viiiiii: dynCall_viiiiii, dynCall_iii: dynCall_iii, dynCall_iiiiii: dynCall_iiiiii, dynCall_viiii: dynCall_viiii };
+ })
+ // EMSCRIPTEN_END_ASM
+-({ "Math": Math, "Int8Array": Int8Array, "Int16Array": Int16Array, "Int32Array": Int32Array, "Uint8Array": Uint8Array, "Uint16Array": Uint16Array, "Uint32Array": Uint32Array, "Float32Array": Float32Array, "Float64Array": Float64Array }, { "abort": abort, "assert": assert, "asmPrintInt": asmPrintInt, "asmPrintFloat": asmPrintFloat, "min": Math_min, "invoke_viiiii": invoke_viiiii, "invoke_vi": invoke_vi, "invoke_vii": invoke_vii, "invoke_iiiiiii": invoke_iiiiiii, "invoke_iiiii": invoke_iiiii, "invoke_ii": invoke_ii, "invoke_iiii": invoke_iiii, "invoke_viii": invoke_viii, "invoke_v": invoke_v, "invoke_viiiiii": invoke_viiiiii, "invoke_iii": invoke_iii, "invoke_iiiiii": invoke_iiiiii, "invoke_viiii": invoke_viiii, "_strncmp": _strncmp, "_lseek": _lseek, "___cxa_call_unexpected": ___cxa_call_unexpected, "_snprintf": _snprintf, "___cxa_free_exception": ___cxa_free_exception, "___cxa_throw": ___cxa_throw, "_fread": _fread, "_fclose": _fclose, "_strerror": _strerror, "___cxa_pure_virtual": ___cxa_pure_virtual, "_fprintf": _fprintf, "_sqrt": _sqrt, "_llvm_va_end": _llvm_va_end, "_pread": _pread, "_close": _close, "_feof": _feof, "_fopen": _fopen, "_open": _open, "_strchr": _strchr, "_fputc": _fputc, "___buildEnvironment": ___buildEnvironment, "_log": _log, "_puts": _puts, "_abort": _abort, "___setErrNo": ___setErrNo, "_recv": _recv, "_fseek": _fseek, "_qsort": _qsort, "_send": _send, "_write": _write, "_fputs": _fputs, "_ftell": _ftell, "_llvm_umul_with_overflow_i32": _llvm_umul_with_overflow_i32, "_exit": _exit, "___cxa_find_matching_catch": ___cxa_find_matching_catch, "_strdup": _strdup, "___cxa_allocate_exception": ___cxa_allocate_exception, "_ferror": _ferror, "_printf": _printf, "_sysconf": _sysconf, "_sbrk": _sbrk, "_truncate": _truncate, "_read": _read, "___cxa_is_number_type": ___cxa_is_number_type, "__reallyNegative": __reallyNegative, "_time": _time, "__formatString": __formatString, "___cxa_does_inherit": ___cxa_does_inherit, "_getenv": _getenv, "__ZSt9terminatev": __ZSt9terminatev, "_gettimeofday": _gettimeofday, "_llvm_eh_exception": _llvm_eh_exception, "_vfprintf": _vfprintf, "___cxa_begin_catch": ___cxa_begin_catch, "_unlink": _unlink, "___assert_func": ___assert_func, "__ZSt18uncaught_exceptionv": __ZSt18uncaught_exceptionv, "_pwrite": _pwrite, "_putchar": _putchar, "_fabs": _fabs, "_fsync": _fsync, "_strerror_r": _strerror_r, "___errno_location": ___errno_location, "___gxx_personality_v0": ___gxx_personality_v0, "_isspace": _isspace, "_fdopen": _fdopen, "_bsearch": _bsearch, "_fwrite": _fwrite, "_ftruncate": _ftruncate, "__exit": __exit, "___resumeException": ___resumeException, "_strcmp": _strcmp, "___cxa_end_catch": ___cxa_end_catch, "STACKTOP": STACKTOP, "STACK_MAX": STACK_MAX, "tempDoublePtr": tempDoublePtr, "ABORT": ABORT, "cttz_i8": cttz_i8, "ctlz_i8": ctlz_i8, "NaN": NaN, "Infinity": Infinity, "__ZTIy": __ZTIy, "__ZTIx": __ZTIx, "__ZTIt": __ZTIt, "__ZTIs": __ZTIs, "__ZTIm": __ZTIm, "__ZTIl": __ZTIl, "__ZTIi": __ZTIi, "__ZTIh": __ZTIh, "__ZTIj": __ZTIj, "__ZTIe": __ZTIe, "__ZTId": __ZTId, "__ZTVN10__cxxabiv117__class_type_infoE": __ZTVN10__cxxabiv117__class_type_infoE, "__ZTIf": __ZTIf, "__ZTIa": __ZTIa, "__ZTIc": __ZTIc, "__ZTVN10__cxxabiv120__si_class_type_infoE": __ZTVN10__cxxabiv120__si_class_type_infoE, "_stderr": _stderr, "___progname": ___progname, "__ZTVN10__cxxabiv119__pointer_type_infoE": __ZTVN10__cxxabiv119__pointer_type_infoE }, buffer);
++({ "Math": Math, "Int8Array": Int8Array, "Int16Array": Int16Array, "Int32Array": Int32Array, "Uint8Array": Uint8Array, "Uint16Array": Uint16Array, "Uint32Array": Uint32Array, "Float32Array": Float32Array, "Float64Array": Float64Array }, { "abort": abort, "assert": assert, "asmPrintInt": asmPrintInt, "asmPrintFloat": asmPrintFloat, "min": Math_min, "invoke_viiiii": invoke_viiiii, "invoke_vi": invoke_vi, "invoke_vii": invoke_vii, "invoke_iiiiiii": invoke_iiiiiii, "invoke_iiiii": invoke_iiiii, "invoke_ii": invoke_ii, "invoke_iiii": invoke_iiii, "invoke_viii": invoke_viii, "invoke_v": invoke_v, "invoke_viiiiii": invoke_viiiiii, "invoke_iii": invoke_iii, "invoke_iiiiii": invoke_iiiiii, "invoke_viiii": invoke_viiii, "_strncmp": _strncmp, "_lseek": _lseek, "___cxa_call_unexpected": ___cxa_call_unexpected, "_snprintf": _snprintf, "___cxa_free_exception": ___cxa_free_exception, "___cxa_throw": ___cxa_throw, "_fread": _fread, "_fclose": _fclose, "_strerror": _strerror, "___cxa_pure_virtual": ___cxa_pure_virtual, "_fprintf": _fprintf, "_sqrt": _sqrt, "_llvm_va_end": _llvm_va_end, "_pread": _pread, "_close": _close, "_feof": _feof, "_fopen": _fopen, "_open": _open, "_strchr": _strchr, "_fputc": _fputc, "___buildEnvironment": ___buildEnvironment, "_log": _log, "_puts": _puts, "_abort": _abort, "___setErrNo": ___setErrNo, "_recv": _recv, "_fseek": _fseek, "_qsort": _qsort, "_qsort2": _qsort2, "_send": _send, "_write": _write, "_fputs": _fputs, "_ftell": _ftell, "_llvm_umul_with_overflow_i32": _llvm_umul_with_overflow_i32, "_exit": _exit, "___cxa_find_matching_catch": ___cxa_find_matching_catch, "_strdup": _strdup, "___cxa_allocate_exception": ___cxa_allocate_exception, "_ferror": _ferror, "_printf": _printf, "_sysconf": _sysconf, "_sbrk": _sbrk, "_truncate": _truncate, "_read": _read, "___cxa_is_number_type": ___cxa_is_number_type, "__reallyNegative": __reallyNegative, "_time": _time, "__formatString": __formatString, "___cxa_does_inherit": ___cxa_does_inherit, "_getenv": _getenv, "__ZSt9terminatev": __ZSt9terminatev, "_gettimeofday": _gettimeofday, "_llvm_eh_exception": _llvm_eh_exception, "_vfprintf": _vfprintf, "___cxa_begin_catch": ___cxa_begin_catch, "_unlink": _unlink, "___assert_func": ___assert_func, "__ZSt18uncaught_exceptionv": __ZSt18uncaught_exceptionv, "_pwrite": _pwrite, "_putchar": _putchar, "_fabs": _fabs, "_fsync": _fsync, "_strerror_r": _strerror_r, "___errno_location": ___errno_location, "___gxx_personality_v0": ___gxx_personality_v0, "_isspace": _isspace, "_fdopen": _fdopen, "_bsearch": _bsearch, "_fwrite": _fwrite, "_ftruncate": _ftruncate, "__exit": __exit, "___resumeException": ___resumeException, "_strcmp": _strcmp, "___cxa_end_catch": ___cxa_end_catch, "STACKTOP": STACKTOP, "STACK_MAX": STACK_MAX, "tempDoublePtr": tempDoublePtr, "ABORT": ABORT, "cttz_i8": cttz_i8, "ctlz_i8": ctlz_i8, "NaN": NaN, "Infinity": Infinity, "__ZTIy": __ZTIy, "__ZTIx": __ZTIx, "__ZTIt": __ZTIt, "__ZTIs": __ZTIs, "__ZTIm": __ZTIm, "__ZTIl": __ZTIl, "__ZTIi": __ZTIi, "__ZTIh": __ZTIh, "__ZTIj": __ZTIj, "__ZTIe": __ZTIe, "__ZTId": __ZTId, "__ZTVN10__cxxabiv117__class_type_infoE": __ZTVN10__cxxabiv117__class_type_infoE, "__ZTIf": __ZTIf, "__ZTIa": __ZTIa, "__ZTIc": __ZTIc, "__ZTVN10__cxxabiv120__si_class_type_infoE": __ZTVN10__cxxabiv120__si_class_type_infoE, "_stderr": _stderr, "___progname": ___progname, "__ZTVN10__cxxabiv119__pointer_type_infoE": __ZTVN10__cxxabiv119__pointer_type_infoE }, buffer);
+ var _im_enable_ym_as_szm = Module["_im_enable_ym_as_szm"] = asm["_im_enable_ym_as_szm"];
+ var _strlen = Module["_strlen"] = asm["_strlen"];
+ var _im_reset_search = Module["_im_reset_search"] = asm["_im_reset_search"];
+@@ -27661,9 +27682,9 @@ var i64Math = (function() { // Emscripten wrapper
+    * The above copyright notice and this permission notice shall be
+    * included in all copies or substantial portions of the Software.
+    *
+-   * THE SOFTWARE IS PROVIDED "AS-IS" AND WITHOUT WARRANTY OF ANY KIND, 
+-   * EXPRESS, IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY 
+-   * WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.  
++   * THE SOFTWARE IS PROVIDED "AS-IS" AND WITHOUT WARRANTY OF ANY KIND,
++   * EXPRESS, IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY
++   * WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+    *
+    * IN NO EVENT SHALL TOM WU BE LIABLE FOR ANY SPECIAL, INCIDENTAL,
+    * INDIRECT OR CONSEQUENTIAL DAMAGES OF ANY KIND, OR ANY DAMAGES WHATSOEVER
+@@ -28500,3 +28521,4 @@ if (Module['noInitialRun']) {
+ run();
+ // {{POST_RUN_ADDITIONS}}
+ // {{MODULE_ADDITIONS}}
++})(Module);

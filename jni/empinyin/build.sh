@@ -13,8 +13,8 @@ $EMSCRIPTEN_HOME/emcc ../share/pinyinime.cpp ../share/dictbuilder.cpp ../share/d
      -s ASM_JS=1 -s TOTAL_STACK=131072 -s TOTAL_MEMORY=4194304 -s EXPORTED_FUNCTIONS="['_im_open_decoder', \
      '_im_open_decoder_fd', '_im_close_decoder', '_im_set_max_lens', '_im_flush_cache', \
      '_im_search', '_im_delsearch', '_im_reset_search', '_im_get_sps_str', '_im_get_candidate_char', '_im_get_candidate', \
-     '_im_get_spl_start_pos', '_im_choose', '_im_cancel_last_choice', '_im_get_fixed_len', \
-     '_im_get_predicts', '_im_enable_shm_as_szm', '_im_enable_ym_as_szm', '_malloc', '_toUTF8', '_im_get_predict_at', '_im_get_predicts_utf8']"
+     '_im_get_spl_start', '_im_choose', '_im_cancel_last_choice', '_im_get_fixed_len', \
+     '_im_get_predicts', '_im_enable_shm_as_szm', '_im_enable_ym_as_szm', '_malloc', '_toUTF8', '_im_get_predict_at', '_im_get_predicts_utf8', '_im_get_spl_start_at']"
 
 echo "Entering ../empinyin"
 cd ../empinyin

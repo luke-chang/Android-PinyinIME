@@ -151,11 +151,17 @@ extern "C" {
     return toUTF8(buffer, 64);
   }
 
-  size_t im_get_spl_start_pos(const uint16 *&spl_start) {
+  const uint16 *spl_start;
+
+  size_t im_get_spl_start() {
     if (NULL == matrix_search)
       return 0;
 
     return matrix_search->get_spl_start(spl_start);
+  }
+
+  uint16 im_get_spl_start_at(size_t id) {
+    return spl_start[id];
   }
 
   size_t im_choose(size_t choice_id) {

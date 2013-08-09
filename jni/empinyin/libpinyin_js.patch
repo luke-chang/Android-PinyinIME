@@ -1,17 +1,17 @@
 diff --git a/jni/empinyin/libpinyin.js b/jni/empinyin/libpinyin.js
-index ab5948d..5947f55 100644
+index ab5948d..0d12d4b 100644
 --- a/jni/empinyin/libpinyin.js
 +++ b/jni/empinyin/libpinyin.js
-@@ -15,7 +15,7 @@
- // after the generated code, you will need to define   var Module = {};
- // before the code. Then that object will be used in the code, and you
+@@ -17,6 +17,8 @@
  // can continue to use Module afterwards as well.
--var Module;
-+(function(Module) {
+ var Module;
  if (!Module) Module = eval('(function() { try { return Module || {} } catch(e) { return {} } })()');
++
++(function(Module) {
  // Sometimes an existing Module object exists with properties
  // meant to overwrite the default module functionality. Here
-@@ -901,7 +901,7 @@ function removeRunDependency(id) {
+ // we collect those properties and reapply _after_ we configure
+@@ -901,7 +903,7 @@ function removeRunDependency(id) {
      if (runDependencyWatcher !== null) {
        clearInterval(runDependencyWatcher);
        runDependencyWatcher = null;
@@ -20,7 +20,7 @@ index ab5948d..5947f55 100644
      // If run has never been called, and we should call run (INVOKE_RUN is true, and Module.noInitialRun is not false)
      if (!calledRun && shouldRunNow) run();
    }
-@@ -2433,6 +2433,26 @@ function copyTempDouble(ptr) {
+@@ -2433,6 +2435,26 @@ function copyTempDouble(ptr) {
        ABORT = true;
        throw 'Pure virtual function called!';
      }
@@ -47,7 +47,7 @@ index ab5948d..5947f55 100644
    function _qsort(base, num, size, cmp) {
        if (num == 0 || size == 0) return;
        // forward calls to the JavaScript sort method
-@@ -3338,7 +3358,7 @@ function copyTempDouble(ptr) {
+@@ -3338,7 +3360,7 @@ function copyTempDouble(ptr) {
            	// FIXME: ideally this should be clamped against the canvas size and zero
            	Browser.mouseX += Browser.mouseMovementX;
            	Browser.mouseY += Browser.mouseMovementY;
@@ -56,7 +56,7 @@ index ab5948d..5947f55 100644
          } else {
            // Otherwise, calculate the movement based on the changes
            // in the coordinates.
-@@ -3399,7 +3419,7 @@ function copyTempDouble(ptr) {
+@@ -3399,7 +3421,7 @@ function copyTempDouble(ptr) {
          this.windowedHeight = canvas.height;
          canvas.width = screen.width;
          canvas.height = screen.height;
@@ -65,7 +65,7 @@ index ab5948d..5947f55 100644
          if (typeof SDL != "undefined") {
          	var flags = HEAPU32[((SDL.screen+Runtime.QUANTUM_SIZE*0)>>2)];
          	flags = flags | 0x00800000; // set SDL_FULLSCREEN flag
-@@ -3410,7 +3430,7 @@ function copyTempDouble(ptr) {
+@@ -3410,7 +3432,7 @@ function copyTempDouble(ptr) {
          var canvas = Module['canvas'];
          canvas.width = this.windowedWidth;
          canvas.height = this.windowedHeight;
@@ -74,7 +74,7 @@ index ab5948d..5947f55 100644
          if (typeof SDL != "undefined") {
          	var flags = HEAPU32[((SDL.screen+Runtime.QUANTUM_SIZE*0)>>2)];
          	flags = flags & ~0x00800000; // clear SDL_FULLSCREEN flag
-@@ -3659,6 +3679,7 @@ var asm = (function(global, env, buffer) {
+@@ -3659,6 +3681,7 @@ var asm = (function(global, env, buffer) {
    var ___setErrNo=env.___setErrNo;
    var _recv=env._recv;
    var _fseek=env._fseek;
@@ -82,7 +82,7 @@ index ab5948d..5947f55 100644
    var _qsort=env._qsort;
    var _send=env._send;
    var _write=env._write;
-@@ -10454,7 +10475,7 @@ function __ZN10ime_pinyin12MatrixSearch20QsortLmaPsbItemByPsbEPNS_10LmaPsbItemEj
+@@ -10454,7 +10477,7 @@ function __ZN10ime_pinyin12MatrixSearch20QsortLmaPsbItemByPsbEPNS_10LmaPsbItemEj
     $pos_023 = $pos_023 + 1 | 0;
    } while ($pos_023 >>> 0 < $num >>> 0);
   }
@@ -91,7 +91,7 @@ index ab5948d..5947f55 100644
   $6$0 = _llvm_umul_with_overflow_i32($num | 0, 8) | 0;
   $call3 = __Znaj(tempRet0 ? -1 : $6$0) | 0;
   $10 = $call3;
-@@ -10496,7 +10517,7 @@ function __ZN10ime_pinyin12MatrixSearch22QsortLmaPsbItemByHanziEPNS_10LmaPsbItem
+@@ -10496,7 +10519,7 @@ function __ZN10ime_pinyin12MatrixSearch22QsortLmaPsbItemByHanziEPNS_10LmaPsbItem
     $pos_023 = $pos_023 + 1 | 0;
    } while ($pos_023 >>> 0 < $num >>> 0);
   }
@@ -100,7 +100,7 @@ index ab5948d..5947f55 100644
   $6$0 = _llvm_umul_with_overflow_i32($num | 0, 8) | 0;
   $call3 = __Znaj(tempRet0 ? -1 : $6$0) | 0;
   $10 = $call3;
-@@ -26921,7 +26942,7 @@ function b12(p0, p1, p2, p3) {
+@@ -26921,7 +26944,7 @@ function b12(p0, p1, p2, p3) {
    return { _im_enable_ym_as_szm: _im_enable_ym_as_szm, _strlen: _strlen, _im_reset_search: _im_reset_search, _im_flush_cache: _im_flush_cache, _im_get_candidate_char: _im_get_candidate_char, _realloc: _realloc, _im_get_spl_start: _im_get_spl_start, _im_close_decoder: _im_close_decoder, _toUTF8: _toUTF8, _im_open_decoder_fd: _im_open_decoder_fd, _strncpy: _strncpy, _im_get_spl_start_at: _im_get_spl_start_at, _im_get_fixed_len: _im_get_fixed_len, _im_cancel_last_choice: _im_cancel_last_choice, _memset: _memset, _im_search: _im_search, _memcpy: _memcpy, _calloc: _calloc, _im_choose: _im_choose, _im_set_max_lens: _im_set_max_lens, _im_get_predict_at: _im_get_predict_at, _im_get_candidate: _im_get_candidate, _im_enable_shm_as_szm: _im_enable_shm_as_szm, _im_get_sps_str: _im_get_sps_str, _memcmp: _memcmp, _im_get_predicts: _im_get_predicts, _free: _free, _im_open_decoder: _im_open_decoder, _memmove: _memmove, _malloc: _malloc, _im_get_predicts_utf8: _im_get_predicts_utf8, _im_delsearch: _im_delsearch, _strcpy: _strcpy, runPostSets: runPostSets, stackAlloc: stackAlloc, stackSave: stackSave, stackRestore: stackRestore, setThrew: setThrew, setTempRet0: setTempRet0, setTempRet1: setTempRet1, setTempRet2: setTempRet2, setTempRet3: setTempRet3, setTempRet4: setTempRet4, setTempRet5: setTempRet5, setTempRet6: setTempRet6, setTempRet7: setTempRet7, setTempRet8: setTempRet8, setTempRet9: setTempRet9, dynCall_viiiii: dynCall_viiiii, dynCall_vi: dynCall_vi, dynCall_vii: dynCall_vii, dynCall_iiiiiii: dynCall_iiiiiii, dynCall_iiiii: dynCall_iiiii, dynCall_ii: dynCall_ii, dynCall_iiii: dynCall_iiii, dynCall_viii: dynCall_viii, dynCall_v: dynCall_v, dynCall_viiiiii: dynCall_viiiiii, dynCall_iii: dynCall_iii, dynCall_iiiiii: dynCall_iiiiii, dynCall_viiii: dynCall_viiii };
  })
  // EMSCRIPTEN_END_ASM
@@ -109,7 +109,7 @@ index ab5948d..5947f55 100644
  var _im_enable_ym_as_szm = Module["_im_enable_ym_as_szm"] = asm["_im_enable_ym_as_szm"];
  var _strlen = Module["_strlen"] = asm["_strlen"];
  var _im_reset_search = Module["_im_reset_search"] = asm["_im_reset_search"];
-@@ -27661,9 +27682,9 @@ var i64Math = (function() { // Emscripten wrapper
+@@ -27661,9 +27684,9 @@ var i64Math = (function() { // Emscripten wrapper
     * The above copyright notice and this permission notice shall be
     * included in all copies or substantial portions of the Software.
     *
@@ -122,7 +122,7 @@ index ab5948d..5947f55 100644
     *
     * IN NO EVENT SHALL TOM WU BE LIABLE FOR ANY SPECIAL, INCIDENTAL,
     * INDIRECT OR CONSEQUENTIAL DAMAGES OF ANY KIND, OR ANY DAMAGES WHATSOEVER
-@@ -28500,3 +28521,4 @@ if (Module['noInitialRun']) {
+@@ -28500,3 +28523,4 @@ if (Module['noInitialRun']) {
  run();
  // {{POST_RUN_ADDITIONS}}
  // {{MODULE_ADDITIONS}}
